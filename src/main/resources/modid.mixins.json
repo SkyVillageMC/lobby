@@ -4,13 +4,27 @@
   "package": "hu.bendi.lobby.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-  ],
-  "client": [
-    "MinecraftServerMixin",
-    "DedicatedMinecraftServerMixin",
     "BootstrapMixin",
-    "ServerResourceMAnagerMixin",
-    "RecipeManagerMixin"
+    "CommandDispatcherMixin",
+    "DedicatedMinecraftServerMixin",
+    "EntityMixin",
+    "LevelStorageMixin",
+    "LootManagerMixin",
+    "MinecraftServerMixin",
+    "MixinDFU",
+    "MixinSchemas",
+    "MixinUtils",
+    "NbtHelperMixin",
+    "PlayerAdvancementTrackerMixin",
+    "PlayerManagerMixin",
+    "RecipeManagerMixin",
+    "SaveAllCommandMixin",
+    "SaveOnMixin",
+    "ServerAdvancementLoaderMixin",
+    "ServerConfigListMixin",
+    "ServerPlayerEntityMixin",
+    "ServerResourceManagerMixin",
+    "VersionedChunkStorageMixin"
   ],
   "injectors": {
     "defaultRequire": 1
