@@ -27,6 +27,7 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation include('me.lucko:fabric-permissions-api:0.1-SNAPSHOT')
+	implementation include('org.postgresql:postgresql:42.1.4')
 }
 
 processResources {

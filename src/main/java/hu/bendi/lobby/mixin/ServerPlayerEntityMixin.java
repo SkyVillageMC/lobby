@@ -4,10 +4,16 @@ import com.mojang.authlib.GameProfile;
 import hu.bendi.lobby.Lobby;
 import hu.bendi.lobby.fake.FakeServerRecipeBook;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.advancement.criterion.LevitationCriterion;
+import net.minecraft.advancement.criterion.LocationArrivalCriterion;
+import net.minecraft.advancement.criterion.TickCriterion;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
 import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
+import net.minecraft.scoreboard.ScoreboardCriterion;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerRecipeBook;
@@ -17,11 +23,14 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -66,4 +75,62 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
             }
         }
     }
+
+    /**
+     * @author Bendi
+     */
+    @Overwrite
+    public void updateScores(ScoreboardCriterion criterion, int score) {
+    }
+
+    /**
+     * @author Bendi
+     */
+    @Overwrite
+    private void createEndSpawnPlatform(ServerWorld world, BlockPos centerPos) {
+
+    }
+
+    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancement/criterion/TickCriterion;trigger(Lnet/minecraft/server/network/ServerPlayerEntity;)V"))
+    private void crit(TickCriterion tickCriterion, ServerPlayerEntity player) {
+
+    }
+
+    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancement/criterion/LevitationCriterion;trigger(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/util/math/Vec3d;I)V"))
+    private void levitation(LevitationCriterion levitationCriterion, ServerPlayerEntity player, Vec3d startPos, int duration) {
+
+    }
+
+    @Redirect(method = "playerTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancement/criterion/LocationArrivalCriterion;trigger(Lnet/minecraft/server/network/ServerPlayerEntity;)V"))
+    private void trigger(LocationArrivalCriterion locationArrivalCriterion, ServerPlayerEntity player) {
+
+    }
+
+    /**
+     * @author Bendi
+     */
+    @Overwrite
+    public void onBlockCollision(BlockState state) {
+        Lobby.onCollide((ServerPlayerEntity) (Object)this, state);
+    }
+
+    /**
+     * @author Bendi
+     */
+    @Overwrite
+    public void onStatusEffectApplied(StatusEffectInstance effect) {
+
+    }
+
+    /**
+     * @author Bendi
+     */
+    @Overwrite
+    public void onStatusEffectUpgraded(StatusEffectInstance effect, boolean reapplyEffect) {}
+
+    /**
+     * @author Bendi
+     */
+    @Overwrite
+    public void onStatusEffectRemoved(StatusEffectInstance effect) {}
 }
